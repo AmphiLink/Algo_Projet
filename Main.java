@@ -30,8 +30,7 @@ public class Main {
             String line = obj.nextLine();
             
             if (i == 0 || i % 2 == 1) {                
-                i++;
-                int num = Integer.parseInt(line); 
+                i++; 
                 continue;}
             else {
                 String[] tab_values = line.split(" ");
