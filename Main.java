@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         ArrayList<ArrayList<String>> flowers = readFile(args[0]);
         for (ArrayList<String> listeFleurs : flowers) {
-            String tooMuch = Analyse(listeFleurs);
+            String tooMuch = naive(listeFleurs);
             print(tooMuch);
         }
     }
@@ -46,7 +46,7 @@ public class Main {
         return globList;
     }
 
-    public static String Analyse(ArrayList<String> listeFleurs) {
+    public static String naive(ArrayList<String> listeFleurs) {
         HashMap<String, Integer> counts = new HashMap<String, Integer>();
         for (String plant : listeFleurs) {
             counts.put(plant, counts.getOrDefault(plant, 0) + 1);
