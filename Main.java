@@ -11,34 +11,34 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        ArrayList<ArrayList<String>> flowers = read_file(args[0]);
-        for (ArrayList<String> liste_fleurs : flowers) {
-            String too_much = Naive(liste_fleurs);
-            print(too_much);
+        ArrayList<ArrayList<String>> flowers = readFile(args[0]);
+        for (ArrayList<String> listeFleurs : flowers) {
+            String tooMuch = Analyse(listeFleurs);
+            print(tooMuch);
         }
     }
 
-    public static ArrayList<ArrayList<String>> read_file(String path) throws IOException {
-       
+    public static ArrayList<ArrayList<String>> readFile(String path) throws IOException {
+
         File file = new File(path);
         Scanner obj = new Scanner(file);
 
         ArrayList<ArrayList<String>> globList = new ArrayList<ArrayList<String>>();
-        
+
         int i = 0;
         while (obj.hasNextLine()) {
             String line = obj.nextLine();
-            
-            if (i == 0 || i % 2 == 1) {                
-                i++; 
-                continue;}
-            else {
-                String[] tab_values = line.split(" ");
-                ArrayList<String> liste_fleurs = new ArrayList<String>();
-                for (String value : tab_values) {
-                    liste_fleurs.add(value);  
+
+            if (i == 0 || i % 2 == 1) {
+                i++;
+                continue;
+            } else {
+                String[] tabValues = line.split(" ");
+                ArrayList<String> listeFleurs = new ArrayList<String>();
+                for (String value : tabValues) {
+                    listeFleurs.add(value);
                 }
-                globList.add(liste_fleurs);  
+                globList.add(listeFleurs);
             }
             i++;
         }
@@ -46,19 +46,19 @@ public class Main {
         return globList;
     }
 
-    public static String Naive(ArrayList<String> liste_fleurs) {
+    public static String Analyse(ArrayList<String> listeFleurs) {
         HashMap<String, Integer> counts = new HashMap<String, Integer>();
-        for (String plant : liste_fleurs) {
+        for (String plant : listeFleurs) {
             counts.put(plant, counts.getOrDefault(plant, 0) + 1);
         }
 
-        String too_much = null;
+        String tooMuch = null;
         for (String plant : counts.keySet()) {
-            if (counts.get(plant) > liste_fleurs.size() / 2) {
-                too_much = plant;
+            if (counts.get(plant) > listeFleurs.size() / 2) {
+                tooMuch = plant;
                 break;
             }
-        }  
-        return too_much;
+        }
+        return tooMuch;
     }
 }
