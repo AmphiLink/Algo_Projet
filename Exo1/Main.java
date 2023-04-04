@@ -1,8 +1,6 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*;
 
 //Spécifie chaque procédure en JML
 public class Main {
@@ -23,7 +21,7 @@ public class Main {
 
         ArrayList<ArrayList<String>> flowers = readFile(args[0]);
         for (ArrayList<String> listeFleurs : flowers) {
-            String tooMuch = naive(listeFleurs);
+            String tooMuch = recursive(listeFleurs);
             print(tooMuch);
         }
 
@@ -83,31 +81,21 @@ public class Main {
         return tooMuch;
     }
 
-   /* public static String recursive(ArrayList<String> listeFleurs){
-        ArrayList<String> listeFleursTotaux = new ArrayList<>();
+    public static String recursive(ArrayList<String> listeFleurs){
         HashMap<String, Integer> counts = new HashMap<String, Integer>();
-        for (String plant : listeFleurs) {
+        int current_index = 0;
+        return recursiveHelp(counts, listeFleurs, current_index, null);
+    }
+
+    private static String recursiveHelp(HashMap<String, Integer> counts, ArrayList<String> listeFleurs, int current_plant, String invasivePlant){
+            String plant = listeFleurs.get(current_plant);
             counts.put(plant, counts.getOrDefault(plant, 0) + 1);
-        }
-        if (listeFleurs.size() == 1){
-            return listeFleurs.get(0);
-        }
-
-        if(counts.get(listeFleurs.get(0)) > counts.get(listeFleurs.get(1))){
-            listeFleurs.remove(listeFleurs.get(1));
-            return recursive(listeFleurs);
-        }
-        else if (counts.get(listeFleurs.get(0)) < counts.get(listeFleurs.get(1))){
-            listeFleurs.remove(listeFleurs.get(0));
-            return recursive(listeFleurs);
-        }
-
-        else{
-            int last_index = listeFleurs.size() - 1;
-            String tmp = listeFleurs.get(1);
-            String var2 = listeFleurs.get(last_index);
-            listeFleurs.get(last_index) = tmp;
-
-        }
-    }*/
+            if (counts.get(plant) > listeFleurs.size()/2){
+                invasivePlant = plant;
+            }
+            if (++current_plant < listeFleurs.size()){
+               invasivePlant = recursiveHelp(counts, listeFleurs, current_plant, invasivePlant);
+            }
+            return invasivePlant;
+    }
 }
