@@ -23,15 +23,15 @@ public class Main {
         ArrayList<ArrayList<String>> flowers = readFile(args[0]);
 
         print("=== Méthode Naïve ===");
-        for (ArrayList<String> listeFleurs : flowers) {
+        for (ArrayList<String> listFlowers : flowers) {
             counts = new HashMap<>();
-            print(naive(listeFleurs, counts));
+            print(naive(listFlowers, counts));
         }
 
         print("\n=== Méthode Récursive ===");
-        for (ArrayList<String> listeFleurs : flowers) {
+        for (ArrayList<String> listFlowers : flowers) {
             counts = new HashMap<>();
-            print(recursive(listeFleurs, counts, 0, null));
+            print(recursive(listFlowers, counts, 0, null));
         }
 
     }
@@ -48,20 +48,24 @@ public class Main {
 
         ArrayList<ArrayList<String>> globList = new ArrayList<ArrayList<String>>();
 
+        //read the file
         int i = 0;
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
-
+            
+            //if number we ignore
             if (i == 0 || i % 2 == 1) {
                 i++;
                 continue;
-            } else {
+            } 
+            //If String we add into a list
+            else {
                 String[] tabValues = line.split(" ");
-                ArrayList<String> listeFleurs = new ArrayList<String>();
+                ArrayList<String> listFlowers = new ArrayList<String>();
                 for (String value : tabValues) {
-                    listeFleurs.add(value);
+                    listFlowers.add(value);
                 }
-                globList.add(listeFleurs);
+                globList.add(listFlowers);
             }
             i++;
         }
@@ -69,18 +73,21 @@ public class Main {
         return globList;
     }
 
-    public static String naive(ArrayList<String> listeFleurs, HashMap<String, Integer> counts) {
-        // @ requires listeFleurs != null;
+    public static String naive(ArrayList<String> listFlowers, HashMap<String, Integer> counts) {
+        // @ requires listFlowers != null;
         // @ ensures \result != null;
         // @ assignable System.out;
         // @ pure;
-        for (String plant : listeFleurs) {
+        
+        //Fill the HashMap
+        for (String plant : listFlowers) {
             counts.put(plant, counts.getOrDefault(plant, 0) + 1);
         }
-
+        
+        //If plant is present more than numberOfPlants/2 the plant is invasive
         String tooMuch = null;
         for (String plant : counts.keySet()) {
-            if (counts.get(plant) > listeFleurs.size() / 2) {
+            if (counts.get(plant) > listFlowers.size() / 2) {
                 tooMuch = plant;
                 break;
             }
@@ -88,22 +95,23 @@ public class Main {
         return tooMuch;
     }
 
-    // Spécifie cette fonction recursive en JML
-    public static String recursive(ArrayList<String> listeFleurs, HashMap<String, Integer> counts, int current_plant,
+    //Recursive method
+    public static String recursive(ArrayList<String> listFlowers, HashMap<String, Integer> counts, int currentPlant,
             String invasivePlant) {
-        // @ requires listeFleurs != null;
+        // @ requires listFlowers != null;
         // @ requires counts != null;
-        // @ requires current_plant >= 0;
+        // @ requires currentPlant >= 0;
         // @ ensures \result != null;
         // @ assignable System.out;
         // @ pure;
-        String plant = listeFleurs.get(current_plant);
+        String plant = listFlowers.get(currentPlant);
         counts.put(plant, counts.getOrDefault(plant, 0) + 1);
-        if (counts.get(plant) > listeFleurs.size() / 2) {
+        if (counts.get(plant) > listFlowers.size() / 2) {
             invasivePlant = plant;
         }
-        if (++current_plant < listeFleurs.size()) {
-            invasivePlant = recursive(listeFleurs, counts, current_plant, invasivePlant);
+        //We increment currentPlant before calling recursive function
+        if (++currentPlant < listFlowers.size()) {
+            invasivePlant = recursive(listFlowers, counts, currentPlant, invasivePlant);
         }
         return invasivePlant;
     }
