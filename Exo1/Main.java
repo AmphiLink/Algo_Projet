@@ -4,30 +4,25 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-//Spécifie chaque procédure en JML
 public class Main {
 
     /**
      * Print the object
-     * @param o
+     * @param o;
      * @requires o != null;
      * @ensures true;
      * @assignable System.out;
      * @pure;
      */
     public static void print(Object o) {
-        // @ requires o != null;
-        // @ ensures true;
-        // @ assignable System.out;
-
         System.out.println(o);
     }
 
     /**
      * Main method
      * 
-     *@param args
-     *@throws IOException
+     *@param args;
+     *@throws IOException;
      *@requires args.length() == 1;
      *@ensures true;
      *@assignable System.out;
@@ -51,8 +46,8 @@ public class Main {
         }
         
         print("\n=== Methode Diviser Pour Regner ===");
-        for (ArrayList<String> listeFleurs : flowers) {
-            String tooMuch = diviserPourRegner(listeFleurs, 0, listeFleurs.size() - 1);
+        for (ArrayList<String> listFlowers : flowers) {
+            String tooMuch = divideToReign(listFlowers, 0, listFlowers.size() - 1);
             print(tooMuch);
         }
 
@@ -61,9 +56,9 @@ public class Main {
     /**
      * Read the file and return a list of list of plants
      * 
-     *@param path
-     *@return a list of list of plants
-     *@throws IOException
+     *@param path;
+     *@return a list of list of plants;
+     *@throws IOException;
      *@requires path != null;
      *@ensures \result != null;
      *@assignable System.out;
@@ -103,9 +98,9 @@ public class Main {
     /**
      * Naive method
      * 
-     *@param listFlowers
-     *@param counts
-     *@return the invasive plant
+     *@param listFlowers;
+     *@param counts;
+     *@return the invasive plant;
      *@requires listFlowers != null;
      *@ensures \result != null;
      *@assignable System.out;
@@ -156,28 +151,27 @@ public class Main {
     /**
      * Divid and conquer method
      * 
-     * @param listeFleurs The list of plants.
-     * @param fleur The plant to count.
-     * @param left The leftmost index of the sublist to count.
-     * @param right The rightmost index of the sublist to count.
+     * @param listFlowers The list of plants;
+     * @param left The leftmost index of the sublist to count;
+     * @param right The rightmost index of the sublist to count;
      * 
-     * @requires listeFleurs != null && fleur != null && left >= 0 && right < listeFleurs.size() && left <= right
-     * @ensures The method returns the number of occurrences of the plant in the sublist.
-     * @assignable None.
-     * @throws None.
-     * @pure.
+     * @requires listFlowers != null && flower != null && left >= 0 && right < listFlowers.size() && left <= right;
+     * @ensures The method returns the number of occurrences of the plant in the sublist;
+     * @assignable None;
+     * @throws None;
+     * @pure;
      */
-    public static String diviserPourRegner(ArrayList<String> listeFleurs, int left, int right) {
+    public static String divideToReign(ArrayList<String> listFlowers, int left, int right) {
         // If the sublist is empty, return null.
         if (left == right) {
             return null;
         }
         int mid = (left + right) / 2;
         // Divide the list into two sublists.
-        String leftResult = diviserPourRegner(listeFleurs, left, mid);
-        String rightResult = diviserPourRegner(listeFleurs, mid + 1, right);
+        String leftResult = divideToReign(listFlowers, left, mid);
+        String rightResult = divideToReign(listFlowers, mid + 1, right);
         // Count the occurrences of the plant in the sublist.
-        int count = counter(listeFleurs, listeFleurs.get(mid), left, right);
+        int count = counter(listFlowers, listFlowers.get(mid), left, right);
         // totalCount is the total number of elements in the sublist.
         int totalCount = right - left + 1;
         // If the plant occurs more than half the time, return it.
@@ -186,7 +180,7 @@ public class Main {
         } else if (rightResult != null) { // If at the right, return the right result.
             return rightResult;
         } else if (count > totalCount / 2) { // In other cases, return the plant.
-            return listeFleurs.get(mid);
+            return listFlowers.get(mid);
         } else { // Otherwise, return null.
             return null;
         }
@@ -194,24 +188,24 @@ public class Main {
     /**
      * This method counts the number of occurrences of a plant in a sublist.
      * 
-     * @param listeFleurs The list of plants.
-     * @param fleur The plant to count.
-     * @param left The leftmost index of the sublist to count.
-     * @param right The rightmost index of the sublist to count.
+     * @param listFlowers The list of plants;
+     * @param flower The plant to count;
+     * @param left The leftmost index of the sublist to count;
+     * @param right The rightmost index of the sublist to count;
      * 
-     * @requires listeFleurs != null && fleur != null && left >= 0 && right < listeFleurs.size() && left <= right
-     * @ensures The method returns the number of occurrences of the plant in the sublist.
-     * @assignable None.
-     * @throws None.
-     * @pure.
+     * @requires listFlowers != null && flower != null && left >= 0 && right < listFlowers.size() && left <= right;
+     * @ensures The method returns the number of occurrences of the plant in the sublist;
+     * @assignable None;
+     * @throws None;
+     * @pure;
      */
-    public static int counter(ArrayList<String> listeFleurs, String fleur, int left, int right) {
+    public static int counter(ArrayList<String> listFlowers, String flower, int left, int right) {
         // We count the number of occurrences of the plant in the sublist.
         int count = 0;
         // We iterate over the sublist.
         for (int i = left; i <= right; i++) {
             // If the plant is found, we increment the counter. 
-            if (listeFleurs.get(i).equals(fleur)) {
+            if (listFlowers.get(i).equals(flower)) {
                 count++;
             }
         }
