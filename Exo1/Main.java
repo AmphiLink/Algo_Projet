@@ -26,6 +26,7 @@ public class Main {
             String tooMuch = naive(listeFleurs);
             print(tooMuch);
         }
+
     }
 
     public static ArrayList<ArrayList<String>> readFile(String path) throws IOException {
@@ -80,5 +81,33 @@ public class Main {
             }
         }
         return tooMuch;
+    }
+
+    public static String recursive(ArrayList<String> listeFleurs){
+        ArrayList<String> listeFleursTotaux = new ArrayList<>();
+        HashMap<String, Integer> counts = new HashMap<String, Integer>();
+        for (String plant : listeFleurs) {
+            counts.put(plant, counts.getOrDefault(plant, 0) + 1);
+        }
+        if (listeFleurs.size() == 1){
+            return listeFleurs.get(0);
+        }
+
+        if(counts.get(listeFleurs.get(0)) > counts.get(listeFleurs.get(1))){
+            listeFleurs.remove(listeFleurs.get(1));
+            return recursive(listeFleurs);
+        }
+        else if (counts.get(listeFleurs.get(0)) < counts.get(listeFleurs.get(1))){
+            listeFleurs.remove(listeFleurs.get(0));
+            return recursive(listeFleurs);
+        }
+
+        else{
+            int last_index = listeFleurs.size() - 1;
+            String tmp = listeFleurs.get(1);
+            String var2 = listeFleurs.get(last_index);
+            listeFleurs.get(last_index) = tmp;
+
+        }
     }
 }
