@@ -19,11 +19,22 @@ public class Main {
         // @ assignable System.out;
         // @ throws IOException;
 
+        HashMap<String, Integer> counts = new HashMap<String, Integer>();
         ArrayList<ArrayList<String>> flowers = readFile(args[0]);
+
+        print("=== Méthode Naïve ===");
         for (ArrayList<String> listeFleurs : flowers) {
-            String tooMuch = recursive(listeFleurs);
+            String tooMuch = naive(listeFleurs, counts);
             print(tooMuch);
         }
+
+        counts = new HashMap<>();
+        print("\n=== Méthode Récursive ===");
+        for (ArrayList<String> listeFleurs : flowers) {
+            String tooMuch = recursive(listeFleurs, counts, 0, null);
+            print(tooMuch);
+        }
+
 
     }
 
@@ -60,13 +71,11 @@ public class Main {
         return globList;
     }
 
-    public static String naive(ArrayList<String> listeFleurs) {
+    public static String naive(ArrayList<String> listeFleurs, HashMap<String, Integer> counts) {
         // @ requires listeFleurs != null;
         // @ ensures \result != null;
         // @ assignable System.out;
         // @ pure;
-
-        HashMap<String, Integer> counts = new HashMap<String, Integer>();
         for (String plant : listeFleurs) {
             counts.put(plant, counts.getOrDefault(plant, 0) + 1);
         }
@@ -81,20 +90,14 @@ public class Main {
         return tooMuch;
     }
 
-    public static String recursive(ArrayList<String> listeFleurs){
-        HashMap<String, Integer> counts = new HashMap<String, Integer>();
-        int current_index = 0;
-        return recursiveHelp(counts, listeFleurs, current_index, null);
-    }
-
-    private static String recursiveHelp(HashMap<String, Integer> counts, ArrayList<String> listeFleurs, int current_plant, String invasivePlant){
+    public static String recursive(ArrayList<String> listeFleurs, HashMap<String, Integer> counts, int current_plant, String invasivePlant){
             String plant = listeFleurs.get(current_plant);
             counts.put(plant, counts.getOrDefault(plant, 0) + 1);
             if (counts.get(plant) > listeFleurs.size()/2){
                 invasivePlant = plant;
             }
             if (++current_plant < listeFleurs.size()){
-               invasivePlant = recursiveHelp(counts, listeFleurs, current_plant, invasivePlant);
+               invasivePlant = recursive(listeFleurs, counts, current_plant, invasivePlant);
             }
             return invasivePlant;
     }
