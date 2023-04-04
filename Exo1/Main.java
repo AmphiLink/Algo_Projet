@@ -83,7 +83,7 @@ public class Main {
         return tooMuch;
     }
 
-    public static String recursive(ArrayList<String> listeFleurs){
+   /* public static String recursive(ArrayList<String> listeFleurs){
         ArrayList<String> listeFleursTotaux = new ArrayList<>();
         HashMap<String, Integer> counts = new HashMap<String, Integer>();
         for (String plant : listeFleurs) {
@@ -109,5 +109,5 @@ public class Main {
             listeFleurs.get(last_index) = tmp;
 
         }
-    }
+    }*/
 }
