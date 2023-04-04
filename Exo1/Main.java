@@ -35,7 +35,6 @@ public class Main {
             print(tooMuch);
         }
 
-
     }
 
     public static ArrayList<ArrayList<String>> readFile(String path) throws IOException {
@@ -90,15 +89,23 @@ public class Main {
         return tooMuch;
     }
 
-    public static String recursive(ArrayList<String> listeFleurs, HashMap<String, Integer> counts, int current_plant, String invasivePlant){
-            String plant = listeFleurs.get(current_plant);
-            counts.put(plant, counts.getOrDefault(plant, 0) + 1);
-            if (counts.get(plant) > listeFleurs.size()/2){
-                invasivePlant = plant;
-            }
-            if (++current_plant < listeFleurs.size()){
-               invasivePlant = recursive(listeFleurs, counts, current_plant, invasivePlant);
-            }
-            return invasivePlant;
+    // Spécifie cette fonction recursive en JML
+    public static String recursive(ArrayList<String> listeFleurs, HashMap<String, Integer> counts, int current_plant,
+            String invasivePlant) {
+        // @ requires listeFleurs != null;
+        // @ requires counts != null;
+        // @ requires current_plant >= 0;
+        // @ ensures \result != null;
+        // @ assignable System.out;
+        // @ pure;
+        String plant = listeFleurs.get(current_plant);
+        counts.put(plant, counts.getOrDefault(plant, 0) + 1);
+        if (counts.get(plant) > listeFleurs.size() / 2) {
+            invasivePlant = plant;
+        }
+        if (++current_plant < listeFleurs.size()) {
+            invasivePlant = recursive(listeFleurs, counts, current_plant, invasivePlant);
+        }
+        return invasivePlant;
     }
 }
