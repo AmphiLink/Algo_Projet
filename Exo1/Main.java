@@ -19,20 +19,19 @@ public class Main {
         // @ assignable System.out;
         // @ throws IOException;
 
-        HashMap<String, Integer> counts = new HashMap<String, Integer>();
+        HashMap<String, Integer> counts;
         ArrayList<ArrayList<String>> flowers = readFile(args[0]);
 
         print("=== Méthode Naïve ===");
         for (ArrayList<String> listeFleurs : flowers) {
-            String tooMuch = naive(listeFleurs, counts);
-            print(tooMuch);
+            counts = new HashMap<>();
+            print(naive(listeFleurs, counts));
         }
 
-        counts = new HashMap<>();
         print("\n=== Méthode Récursive ===");
         for (ArrayList<String> listeFleurs : flowers) {
-            String tooMuch = recursive(listeFleurs, counts, 0, null);
-            print(tooMuch);
+            counts = new HashMap<>();
+            print(recursive(listeFleurs, counts, 0, null));
         }
 
     }
