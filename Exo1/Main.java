@@ -8,11 +8,12 @@ public class Main {
 
     /**
      * Print the object
-     * @param o;
-     * @requires o != null;
-     * @ensures true;
-     * @assignable System.out;
-     * @pure;
+     *
+     *@public normal_behaviour
+     *@param o;
+     *@requires o != null;
+     *@modifies System.out;
+     *@pure;
      */
     public static void print(Object o) {
         System.out.println(o);
@@ -20,13 +21,12 @@ public class Main {
 
     /**
      * Main method
-     * 
+     *
+     *@public normal_behaviour
      *@param args;
      *@throws IOException;
      *@requires args.length() == 1;
-     *@ensures true;
-     *@assignable System.out;
-     *@throws IOException;
+     *@modifies System.out;
      */
     public static void main(String[] args) throws IOException {
 
@@ -59,9 +59,11 @@ public class Main {
      *@param path;
      *@return a list of list of plants;
      *@throws IOException;
-     *@requires path != null;
-     *@ensures \result != null;
-     *@assignable System.out;
+     *@requires path != null && path[0] != null;
+     *@requires scanner.hasNextLine() == True;
+     *@ensures \result != null && \result.size() >= 0;
+     *@ensures globList.size() == listFlowers.size();
+     *@assignable \nothing;
      *@pure;
      */
     public static ArrayList<ArrayList<String>> readFile(String path) throws IOException {
@@ -100,10 +102,13 @@ public class Main {
      * 
      *@param listFlowers;
      *@param counts;
+     *
      *@return the invasive plant;
      *@requires listFlowers != null;
-     *@ensures \result != null;
-     *@assignable System.out;
+     *@requires counts != null;
+     *@ensures \result == null ==> (\forall String plant;counts.get(plant) <= listFlowers.size()/2)
+     *@ensures \result != null ==> String plant; counts.get(plant) > listFlowers.size()/2
+     *@assignable \nothing;
      *@pure;
      */
     public static String naive(ArrayList<String> listFlowers, HashMap<String, Integer> counts) {
@@ -126,12 +131,18 @@ public class Main {
 
     /**
      * Recursive method
-     * 
+     *
+     *@param listFlowers;
+     *@param counts;
+     *@param currentPlant;
+     *@param invasivePlant;
+     *
      *@requires listFlowers != null;
      *@requires counts != null;
      *@requires currentPlant >= 0;
-     *@ensures \result != null;
-     *@assignable System.out;
+     *@ensures \result == null ==> (\forall String plant;counts.get(plant) <= listFlowers.size() /2) && current_plant == listFlower.size() - 1 && invasivePlant = plant;
+     *@ensures \result != null ==> String plant; counts.get(plant) > listFlowers.size() /2 && current_plant <= listFlower.size() - 1;
+     *@assignable \nothing;
      *@pure;
      */
     public static String recursive(ArrayList<String> listFlowers, HashMap<String, Integer> counts, int currentPlant,
@@ -149,16 +160,16 @@ public class Main {
     }
     
     /**
-     * Divid and conquer method
+     * Divide and conquer method
      * 
      * @param listFlowers The list of plants;
      * @param left The leftmost index of the sublist to count;
      * @param right The rightmost index of the sublist to count;
      * 
      * @requires listFlowers != null && flower != null && left >= 0 && right < listFlowers.size() && left <= right;
-     * @ensures The method returns the number of occurrences of the plant in the sublist;
-     * @assignable None;
-     * @throws None;
+     * @ensures \result == null ==> left == right || (leftResult == null && rightResult == null && count <= totalCount/2);
+     * @ensures \result != null ==> left != right && (count > totalCount / 2)
+     * @assignable \nothing;
      * @pure;
      */
     public static String divideToReign(ArrayList<String> listFlowers, int left, int right) {
@@ -194,9 +205,10 @@ public class Main {
      * @param right The rightmost index of the sublist to count;
      * 
      * @requires listFlowers != null && flower != null && left >= 0 && right < listFlowers.size() && left <= right;
-     * @ensures The method returns the number of occurrences of the plant in the sublist;
-     * @assignable None;
-     * @throws None;
+     * @requires (\forall int i; 0<= i && i< listFlowers.size() && count <= i && i<= right && i=left);
+     * @ensures \result == 0 ==> (\forall int i; 0<= i && i>right);
+     * @ensures \result != 0 ==> int i; i=left && i <= right && listFlowers.get(i).equals(flower) == true;
+     * @assignable nothing;
      * @pure;
      */
     public static int counter(ArrayList<String> listFlowers, String flower, int left, int right) {
