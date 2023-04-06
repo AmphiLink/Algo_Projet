@@ -9,30 +9,30 @@ public class Naive{
     public static void main(String[] args) throws IOException{
 
         // Get the data from the file and get the number of test cases
-        List<List<Object>> data = interpret_file(args[0]);
+        List<List<Object>> data = interpretFile(args[0]);
 
         // For each test case, we calculate the best path
         for (List<Object> datum : data) {
 
             // Get all possible path in this matrix
-            List<List<int[]>> allPaths = all_paths((int[][]) datum.get(0), 0, 0, new ArrayList<>());
+            List<List<int[]>> allPaths = allPaths((int[][]) datum.get(0), 0, 0, new ArrayList<>());
 
             // Calculate the number of beers in each path and get the best one
             int nBeer;
-            int best_nBeer = -1;
+            int bestNBeer = -1;
             for (List<int[]> path : allPaths) {
-                nBeer = calculate_paths(path, (int[][]) datum.get(0), (int) datum.get(1));
-                if (nBeer > best_nBeer) {
-                    best_nBeer = nBeer;
+                nBeer = calculatePaths(path, (int[][]) datum.get(0), (int) datum.get(1));
+                if (nBeer > bestNBeer) {
+                    bestNBeer = nBeer;
                 }
             }
 
             // Print the best number of beers or -1 if there is no possible path
-            System.out.println(best_nBeer);
+            System.out.println(bestNBeer);
         }
     }
 
-    public static List<List<Object>> interpret_file(String path) throws IOException{
+    public static List<List<Object>> interpretFile(String path) throws IOException{
 
         // Open the file given as parameter and extract the first line
         File file = new File(path);
@@ -79,7 +79,7 @@ public class Naive{
         return data;
     }
 
-    public static List<List<int[]>> all_paths(int[][] matrix, int row, int column, List<int[]> path) {
+    public static List<List<int[]>> allPaths(int[][] matrix, int row, int column, List<int[]> path) {
 
         // Get the number of rows and columns and create a list of all paths
         int nRows = matrix.length;
@@ -97,17 +97,17 @@ public class Naive{
             if(row < nRows - 1 && column < nColumns - 1) {
 
                 // if we are not at the end of the row and the column, we test the path in diagonal
-                allPaths.addAll(all_paths(matrix, row + 1, column + 1, new ArrayList<>(path)));
+                allPaths.addAll(allPaths(matrix, row + 1, column + 1, new ArrayList<>(path)));
             }
             if(row < nRows - 1) {
 
                 // if we are not at the end of the row, we test the path in the next row
-                allPaths.addAll(all_paths(matrix, row + 1, column, new ArrayList<>(path)));
+                allPaths.addAll(allPaths(matrix, row + 1, column, new ArrayList<>(path)));
             }
             if(column < nColumns - 1) {
 
                 // if we are not at the end of the column, we test the path in the next column
-                allPaths.addAll(all_paths(matrix, row, column + 1, new ArrayList<>(path)));
+                allPaths.addAll(allPaths(matrix, row, column + 1, new ArrayList<>(path)));
             }
         }
 
@@ -115,7 +115,7 @@ public class Naive{
         return allPaths;
     }
 
-    public static int calculate_paths(List<int[]> path, int[][] matrix, int nMaxBeers) {
+    public static int calculatePaths(List<int[]> path, int[][] matrix, int nMaxBeers) {
 
         // Calculate the number of beers in the path
         int nBeer = 0;

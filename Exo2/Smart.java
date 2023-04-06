@@ -9,28 +9,28 @@ public class Smart {
     public static void main(String[] args) throws IOException {
 
         // Get the data from the file and get the number of test cases
-        List<List<Object>> data = interpret_file(args[0]);
+        List<List<Object>> data = interpretFile(args[0]);
 
         // For each test case, we calculate the best path
         for (List<Object> datum : data) {
 
             // Get all possible path in this matrix (each path represented by his number of beers)
-            List<Integer> allPaths = all_paths((int[][]) datum.get(0), (int) datum.get(1), 0, 0, new ArrayList<>(), 0);
+            List<Integer> allPaths = allPaths((int[][]) datum.get(0), (int) datum.get(1), 0, 0, new ArrayList<>(), 0);
 
             // Take the best number of beers
-            int best_nBeer = -1;
+            int bestNBeer = -1;
             for (int nBeer : allPaths) {
-                if (nBeer > best_nBeer) {
-                    best_nBeer = nBeer;
+                if (nBeer > bestNBeer) {
+                    bestNBeer = nBeer;
                 }
             }
 
             // Print the best number of beers or -1 if there is no possible path
-            System.out.println(best_nBeer);
+            System.out.println(bestNBeer);
         }
     }
 
-    public static List<List<Object>> interpret_file(String path) throws IOException {
+    public static List<List<Object>> interpretFile(String path) throws IOException {
 
         // Open the file given as parameter and extract the first line
         File file = new File(path);
@@ -77,7 +77,7 @@ public class Smart {
         return data;
     }
 
-    public static List<Integer> all_paths(int[][] matrix, int nMaxBeers, int row, int column, List<int[]> path, int nBeer) {
+    public static List<Integer> allPaths(int[][] matrix, int nMaxBeers, int row, int column, List<int[]> path, int nBeer) {
 
         // Get the number of rows and columns and create a list of all paths
         int nRows = matrix.length;
@@ -103,17 +103,17 @@ public class Smart {
             if (row < nRows - 1 && column < nColumns - 1) {
 
                 // if we are not at the end of the row and the column, we test the path in diagonal
-                allPaths.addAll(all_paths(matrix, nMaxBeers, row + 1, column + 1, new ArrayList<>(path), nBeer));
+                allPaths.addAll(allPaths(matrix, nMaxBeers, row + 1, column + 1, new ArrayList<>(path), nBeer));
             }
             if (row < nRows - 1) {
 
                 // if we are not at the end of the row, we test the path in the next row
-                allPaths.addAll(all_paths(matrix, nMaxBeers, row + 1, column, new ArrayList<>(path), nBeer));
+                allPaths.addAll(allPaths(matrix, nMaxBeers, row + 1, column, new ArrayList<>(path), nBeer));
             }
             if (column < nColumns - 1) {
 
                 // if we are not at the end of the column, we test the path in the next column
-                allPaths.addAll(all_paths(matrix, nMaxBeers, row, column + 1, new ArrayList<>(path), nBeer));
+                allPaths.addAll(allPaths(matrix, nMaxBeers, row, column + 1, new ArrayList<>(path), nBeer));
             }
         }
 

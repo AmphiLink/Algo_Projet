@@ -12,18 +12,18 @@ public class Naive {
     public static void main(String[] args) throws IOException {
 
         // Get the data from the file and get the number of test cases
-        List<List<Object>> data = interpret_file(args[0]);
+        List<List<Object>> data = interpretFile(args[0]);
 
         // For each test case, we calculate the best price and weight
         for (List<Object> testCase : data) {
             int[][] matrix = (int[][]) testCase.get(0);
             int maxWeight = (int) testCase.get(1);
-            int[] results = bag_optimisation(matrix, maxWeight);
+            int[] results = bagOptimisation(matrix, maxWeight);
             System.out.println("Price : " + results[0] + " Weight : " + results[1]);
         }
     }
 
-    public static List<List<Object>> interpret_file(String path) throws IOException {
+    public static List<List<Object>> interpretFile(String path) throws IOException {
 
         // Open the file given as parameter and extract the first line
         File file = new File(path);
@@ -43,7 +43,7 @@ public class Naive {
             // Getting the config of the test case
             String[] config = line.split(" ");
             int nProducts = Integer.parseInt(config[0]);
-            int MaxWeight = Integer.parseInt(config[1]);
+            int maxWeight = Integer.parseInt(config[1]);
 
             // Filling a matrix with a representation of the items
             int[][] matrix = new int[nProducts][2];
@@ -58,7 +58,7 @@ public class Naive {
             // Adding the matrix and the number max of weight to the data
             List<Object> toAdd = new ArrayList<>();
             toAdd.add(matrix);
-            toAdd.add(MaxWeight);
+            toAdd.add(maxWeight);
             data.add(toAdd);
         }
 
@@ -69,7 +69,7 @@ public class Naive {
         return data;
     }
 
-    public static int[] bag_optimisation(int[][] items, int maxWeight) {
+    public static int[] bagOptimisation(int[][] items, int maxWeight) {
 
         // Sorting the items by decreasing ratio of price/weight
         Arrays.sort(items, (int[] a, int[] b) -> {

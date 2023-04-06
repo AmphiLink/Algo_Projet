@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Algo_Projet.iml" filepath="$PROJECT_DIR$/Algo_Projet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Exo1/Exo1.iml" filepath="$PROJECT_DIR$/Exo1/Exo1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Exo2/Exo2.iml" filepath="$PROJECT_DIR$/Exo2/Exo2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Exo3/Exo3.iml" filepath="$PROJECT_DIR$/Exo3/Exo3.iml" />
     </modules>
   </component>
 </project>
