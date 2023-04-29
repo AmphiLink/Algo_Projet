@@ -6,15 +6,6 @@ import java.util.ArrayList;
 
 public class Main {
 
-    /**
-     * Print the object
-     *
-     *@public normal_behaviour
-     *@param o;
-     *@requires o != null;
-     *@modifies System.out;
-     *@pure;
-     */
     public static void print(Object o) {
         System.out.println(o);
     }
@@ -24,9 +15,9 @@ public class Main {
      *
      *@public normal_behaviour
      *@param args;
-     *@throws IOException;
+     *@signals IOException;
      *@requires args.length() == 1;
-     *@modifies System.out;
+     *@assigns System.out;
      */
     public static void main(String[] args) throws IOException {
 
@@ -58,7 +49,7 @@ public class Main {
      * 
      *@param path;
      *@return a list of list of plants;
-     *@throws IOException;
+     *@signals IOException;
      *@requires path != null && path[0] != null;
      *@requires scanner.hasNextLine() == True;
      *@ensures \result != null && \result.size() >= 0;
