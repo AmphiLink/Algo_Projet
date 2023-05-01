@@ -79,6 +79,19 @@ public class Naive{
         return data;
     }
 
+    /**
+     * @param matrix: the matrix representing the map
+     * @param row: the current row
+     * @param column: the current column
+     * @param path: the current path
+     * @requires row < matrix lenght && column < matrix[0] lenght
+     * @requires matrix != null
+     * @requires path != null
+     * @ensures \result != null;
+     * @ensures (\forall List<int[]> path1; \result.contains(path1); path1.size() > 0 && path1.get(0)[0] == row && path1.get(0)[1] == column);
+     * @assignable \nothing;
+     * @pure
+     **/
     public static List<List<int[]>> allPaths(int[][] matrix, int row, int column, List<int[]> path) {
 
         // Get the number of rows and columns and create a list of all paths
@@ -115,6 +128,16 @@ public class Naive{
         return allPaths;
     }
 
+    /**
+     * @param path: the path to calculate
+     * @param matrix: the matrix representing the map
+     * @param nMaxBeers: the number max of beersµ
+     * @requires path != null
+     * @requires matrix != null
+     * @ensures (\result >= 0 && \result <= nMaxBeers) || \result == -1;
+     * @assignable \nothing;
+     * @pure
+     **/
     public static int calculatePaths(List<int[]> path, int[][] matrix, int nMaxBeers) {
 
         // Calculate the number of beers in the path

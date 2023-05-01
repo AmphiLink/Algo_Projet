@@ -77,6 +77,22 @@ public class Smart {
         return data;
     }
 
+    /**
+    * @param matrix: the matrix representing the map
+    * @param nMaxBeers: the number max of beers
+    * @param row: the current row
+    * @param column: the current column
+    * @param path: the current path
+    * @param nBeer: the number of beers in the current path
+    * @requires row < matrix lenght && column < matrix[0] lenght
+    * @requires nBeer <= nMaxBeers
+    * @requires matrix != null
+    * @requires path != null
+    * @ensures \result != null;
+    * @ensures (\forall int i; i >= 0 && i < \result.size(); \result.get(i) >= 0 && \result.get(i) <= nMaxBeers);
+    * @assignable \nothing;
+    * @pure
+    **/
     public static List<Integer> allPaths(int[][] matrix, int nMaxBeers, int row, int column, List<int[]> path, int nBeer) {
 
         // Get the number of rows and columns and create a list of all paths
