@@ -52,6 +52,15 @@ public class Naive {
         return data;
     }
 
+    /**
+     * @param currentItem     : the current item we are looking at
+     * @param remainingWeight : the remaining weight we can use
+     * @param items           : the matrix of items
+     * @requires currentItem >= 0 && currentItem < items.length
+     * @requires remainingWeight >= 0
+     * @ensures \result > 0
+     * @ensures \forall int i; i >= 0 && i < items.length; \result >= items[i][0]
+     **/
     public static int maxValue(int currentItem, int remainingWeight, int[][] items) {
         if (currentItem == items.length) {
             return 0;
@@ -60,7 +69,8 @@ public class Naive {
         int valueWithoutCurrentItem = maxValue(currentItem + 1, remainingWeight, items);
 
         if (remainingWeight >= items[currentItem][1]) {
-            int valueWithCurrentItem = items[currentItem][0] + maxValue(currentItem + 1, remainingWeight - items[currentItem][1], items);
+            int valueWithCurrentItem = items[currentItem][0]
+                    + maxValue(currentItem + 1, remainingWeight - items[currentItem][1], items);
             return Math.max(valueWithoutCurrentItem, valueWithCurrentItem);
         }
 
