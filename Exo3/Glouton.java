@@ -69,6 +69,14 @@ public class Glouton {
         return data;
     }
 
+    /**
+     * @param items : the matrix of items
+     * @param maxWeight : the maximum weight we can carry
+     * @requires items != null
+     * @requires maxWeight >= 0
+     * @ensures \result[0] = the maximum price we can get
+     * @ensures \result[1] = the weight of the bag
+     **/
     public static int[] bagOptimisation(int[][] items, int maxWeight) {
 
         // Sorting the items by decreasing ratio of price/weight

@@ -52,6 +52,15 @@ public class Naive {
         return data;
     }
 
+    /**
+     * @param currentItem     : the current item we are looking at
+     * @param remainingWeight : the remaining weight we can use
+     * @param items           : the matrix of items
+     * @requires currentItem >= 0 && currentItem < items.length
+     * @requires remainingWeight >= 0
+     * @ensures \result > 0
+     * @ensures \forall int i; i >= 0 && i < items.length; \result >= items[i][0]
+     **/
     public static int maxValue(int currentItem, int remainingWeight, int[][] items) {
         // fonction qui ajoute dans une matrice ligne par ligne les objets avec des ordres différents en testant toutes les possibilités et qui renvoie la valeur maximale (regarde si objet déjà présent dans la colonne)
         if (currentItem == items.length) {
