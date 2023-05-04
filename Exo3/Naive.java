@@ -53,17 +53,18 @@ public class Naive {
     }
 
     public static int maxValue(int currentItem, int remainingWeight, int[][] items) {
+        // fonction qui ajoute dans une matrice ligne par ligne les objets avec des ordres différents en testant toutes les possibilités et qui renvoie la valeur maximale (regarde si objet déjà présent dans la colonne)
         if (currentItem == items.length) {
             return 0;
         }
 
-        int valueWithoutCurrentItem = maxValue(currentItem + 1, remainingWeight, items);
+        int valueWithout = maxValue(currentItem + 1, remainingWeight, items);
+        int valueWith = 0;
 
         if (remainingWeight >= items[currentItem][1]) {
-            int valueWithCurrentItem = items[currentItem][0] + maxValue(currentItem + 1, remainingWeight - items[currentItem][1], items);
-            return Math.max(valueWithoutCurrentItem, valueWithCurrentItem);
+            valueWith = items[currentItem][0] + maxValue(currentItem + 1, remainingWeight - items[currentItem][1], items);
         }
 
-        return valueWithoutCurrentItem;
+        return Math.max(valueWith, valueWithout);
     }
 }
